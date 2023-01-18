@@ -2,6 +2,7 @@
 using DSA.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
@@ -67,93 +68,99 @@ namespace DSA.Controllers
             
             //string json = JsonConvert.SerializeObject(studentList);
             //byte[] data = Encoding.UTF8.GetBytes(json);
-            HttpContext.Session.SetInt32("s_list", 1);
+            //HttpContext.Session.SetInt32("s_list", 1);
 
 
             return View(studentList);
         }
 
-
-
-        [HttpGet]
-        public IActionResult Students(string btn)
+        public JsonResult StudentsAPI()
         {
-            //Get linked list from session otherwise create it. Then traverse
-            //byte[] data;
+            var data = _db.Student_DSA.ToList();
+            return new JsonResult(data);
+        }
 
-            if(HttpContext.Session.GetInt32("s_list") == null 
-                || HttpContext.Session.GetInt32("s_list") == 0) //Start or refress session
-            {
-                return Students();
-            }
-            else
-            {
-                GetStudents();
-                int pointer = (int)HttpContext.Session.GetInt32("s_list") + 1;
-                int i = 1;
 
-                if (studentList.Current == null)
-                    return View(studentList);
 
-                switch (btn)
-                {
-                    case "next":
-                        while (studentList.Current.Next != null && i < pointer)
-                        {
-                            D_LinkedList.TraverseRight(studentList);
-                            i++;
-                        }
-                        break;
+        //[HttpGet]
+        //public IActionResult Students(string btn)
+        //{
+        //    //Get linked list from session otherwise create it. Then traverse
+        //    //byte[] data;
 
-                    case "prev":
-                        while (studentList.Current.Prev != null && i < pointer)
-                        {
-                            D_LinkedList.TraverseLeft(studentList);
-                            i++;
-                        }
-                        break;
+        //    if(HttpContext.Session.GetInt32("s_list") == null 
+        //        || HttpContext.Session.GetInt32("s_list") == 0) //Start or refress session
+        //    {
+        //        return Students();
+        //    }
+        //    else
+        //    {
+        //        GetStudents();
+        //        int pointer = (int)HttpContext.Session.GetInt32("s_list") + 1;
+        //        int i = 1;
 
-                    default:
-                        return Students();
-                }
+        //        if (studentList.Current == null)
+        //            return View(studentList);
 
-                HttpContext.Session.SetInt32("s_list", pointer);
-            }
+        //        switch (btn)
+        //        {
+        //            case "next":
+        //                while (studentList.Current.Next != null && i < pointer)
+        //                {
+        //                    D_LinkedList.TraverseRight(studentList);
+        //                    i++;
+        //                }
+        //                break;
 
-            //if (HttpContext.Session.TryGetValue("s_list", out data))
-            //{
-            //    data = HttpContext.Session.Get("s_list");
-            //    string json = Encoding.UTF8.GetString(data);
-            //    studentList = JsonConvert.DeserializeObject<D_LinkedList>(json);
+        //            case "prev":
+        //                while (studentList.Current.Prev != null && i < pointer)
+        //                {
+        //                    D_LinkedList.TraverseLeft(studentList);
+        //                    i++;
+        //                }
+        //                break;
 
-            //}
-            //else
-            //{
-            //    return Students();
-            //}
-            //    switch (btn)
-            //{
-            //    case "next":
-            //        D_LinkedList.TraverseRight(studentList);
-            //        break;
+        //            default:
+        //                return Students();
+        //        }
 
-            //    case "prev":
-            //        D_LinkedList.TraverseLeft(studentList);
-            //        break;
+        //        HttpContext.Session.SetInt32("s_list", pointer);
+        //    }
 
-            //    default:
-            //           return Students();
-            //}
+        //    //if (HttpContext.Session.TryGetValue("s_list", out data))
+        //    //{
+        //    //    data = HttpContext.Session.Get("s_list");
+        //    //    string json = Encoding.UTF8.GetString(data);
+        //    //    studentList = JsonConvert.DeserializeObject<D_LinkedList>(json);
 
-            ////Write back to session
-            //string json2 = JsonConvert.SerializeObject(studentList);
-            //data = Encoding.UTF8.GetBytes(json2);
-            //HttpContext.Session.Set("s_list", data);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Students();
+        //    //}
+        //    //    switch (btn)
+        //    //{
+        //    //    case "next":
+        //    //        D_LinkedList.TraverseRight(studentList);
+        //    //        break;
+
+        //    //    case "prev":
+        //    //        D_LinkedList.TraverseLeft(studentList);
+        //    //        break;
+
+        //    //    default:
+        //    //           return Students();
+        //    //}
+
+        //    ////Write back to session
+        //    //string json2 = JsonConvert.SerializeObject(studentList);
+        //    //data = Encoding.UTF8.GetBytes(json2);
+        //    //HttpContext.Session.Set("s_list", data);
 
             
 
-            return View(studentList);
-        }
+        //    return View(studentList);
+        //}
 
     }
 }
