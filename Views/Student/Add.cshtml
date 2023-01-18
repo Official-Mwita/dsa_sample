@@ -1,0 +1,55 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Add a Student";
+}
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-8">
+            <form id="regForm" asp-action="Add">
+                <h3 id="register">Add a Student</h3>
+                 <div class="tab">
+                    <h6><label asp-for="FirstName" class="control-label"></label></h6>
+                    <p>
+                        <input placeholder="Your first name..." oninput="this.className = ''" asp-for="FirstName" />
+                    </p>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                </div>
+                <div class="tab">
+                    <h6><label asp-for="LastName" class="control-label"></label></h6>
+                    <p>
+                        <input placeholder="Your last name..." oninput="this.className = ''" asp-for="LastName" />
+                    </p>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+
+                </div>
+                <div class="tab">
+                    <h6><label asp-for="StudentGrade" class="control-label"></label></h6>
+                    <p>
+                        <input placeholder="Student Grade..." oninput="this.className = ''" asp-for="StudentGrade" />
+                    </p>
+                    <span asp-validation-for="StudentGrade" class="text-danger"></span>
+
+                </div>
+                <div class="tab">
+                    <h6><label asp-for="StudentEmail" class="control-label"></label></h6>
+                    <p>
+                        <input placeholder="Student Email..." oninput="this.className = ''" asp-for="StudentEmail" />
+                    </p>
+                    <span asp-validation-for="StudentEmail" class="text-danger"></span>
+
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float:left;">
+                        <button type="submit" value="Create">Add Student</button>
+                    </div>
+                    <div style="float:right;">
+                        <button type="button"><a asp-controller="Home" asp-action="Students" style="color:white; text-decoration:none">View Students</a></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
